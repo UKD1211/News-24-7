@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>News24/7</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">News24/7</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Weather</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Politics</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex" role="search">
+                    <input id="searchInput" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button id="search" class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <h1 class="d-flex justify-content-center" style="font-size: 2rem;">Welcome to KBP Ananda (<span
+                id="resultCount" style="color: rgb(0, 0, 0);"></span> Results)</h1>
+        <div class="row content mx-auto justify-content-center"></div>
+        <div class="d-flex justify-content-around my-4">
+            <button class="btn btn-primary" id="prev">
+                &lt; Previous Page</button>
+            <button class="btn btn-primary" id="next">Next Page &gt;</button>
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script>
+        let currentQuery = "sports"
+        let currentPage = 1;
+        const fetchNews = async (page, q) => {
+
+
+            console.log(`Fetching news for ${q}, Page number ${page}...`);
+            var url = 'https://newsapi.org/v2/everything?' +
+                'q=' + q +
+                '&from=2023-03-08&' +
+                'pageSize=20&' +
+                'language=en&' +
+                'page=' + page +
+                '&sortBy=popularity&' +
+                'apiKey=7d1913e47fe044dca4c6336d4e63c703';
+
+            var req = new Request(url);
+
+            let a = await fetch(req)
+            let response = await a.json()
+
+
+            // let response = { "status": "ok", "totalResults": 390, "articles": [{ "source": { "id": null, "name": "Github.com" }, "author": "zajo", "title": "Appler: Apple ][ emulator for IBM PC, written in 8088 assembly", "description": "Apple ][ emulator for MS-DOS, written in 8086 assembly - GitHub - zajo/appler: Apple ][ emulator for MS-DOS, written in 8086 assembly", "url": "https://github.com/zajo/appler", "urlToImage": "https://opengraph.githubassets.com/f19f1cd54feece71cda78b580bf2ae5220bb5ada746eb40565ac70f1bab115d9/zajo/appler", "publishedAt": "2023-03-08T08:14:07Z", "content": "APPLER\r\nAlexander Patalenski | Emil Dotchevski\r\nIntroduction\r\nAppler is an Apple ][ emulator for IBM PC, written in 8088 assembly, running on MS-DOS. It was developed in 1990, at a time when Apple II… [+29004 chars]" }, { "source": { "id": null, "name": "9to5Mac" }, "author": "Filipe Espósito", "title": "Apple updates GarageBand for Mac with important security fixes", "description": "Following the release of iOS 16.4 beta 3 and other software updates to developers on Tuesday, Apple has quietly updated the Mac version of its audio editing app GarageBand. According to the company, today’s update comes with “important security fixes.”\n more……", "url": "https://9to5mac.com/2023/03/07/garageband-mac-security-fixes-update/", "urlToImage": "https://i0.wp.com/9to5mac.com/wp-content/uploads/sites/6/2023/03/GarageBand-Mac.jpg?resize=1200%2C628&quality=82&strip=all&ssl=1", "publishedAt": "2023-03-08T03:37:29Z", "content": "Following the release of iOS 16.4 beta 3 and other software updates to developers on Tuesday, Apple has quietly updated the Mac version of its audio editing app GarageBand. According to the company, … [+1559 chars]" }, { "source": { "id": null, "name": "Gizmodo.jp" }, "author": "はらいさん", "title": "iPhone 14/14 Plusに新色「イエロー」が追加。3月14日発売", "description": "Image:Appleめちゃくちゃかわいい。iPhone14/iPhone14Plus向けの新色として、イエローが追加されました。春の訪れを感じさせる素敵な色合いが特長的です。Image:AppleiPhone14/iPhone14Plusのイエローモデルは日本時間3月10日(金)午後10時に予約開始、3月14日(火)発売となります。iPhone14シリーズのカラーラインナップはこれで全6色。これ", "url": "https://www.gizmodo.jp/2023/03/iphone-14-and-14-plus-yellow.html", "urlToImage": "https://media.loom-app.com/gizmodo/dist/images/2023/03/08/3B1333D4-7C24-40B5-B753-E1EA68A8D156.jpeg?w=1280&h=630&f=jpg", "publishedAt": "2023-03-08T01:50:00Z", "content": "iPhone 14/ iPhone 14 Plus\r\nImage: Apple\r\niPhone 14/ iPhone 14 Plus310()10314()iPhone 146\r\nImage: Apple\r\niPhone 14/iPhone 14PlusiPhone 14 Pro/iPhone 14 Pro Max\r\n4\r\nImage: Apple\r\nApple Watch\r\nSource:Ap… [+2 chars]" }, { "source": { "id": "business-insider", "name": "Business Insider" }, "author": "htan@insider.com (Huileng Tan)", "title": "Elon Musk says it's been 'a very difficult four months' at Twitter, but the company has 'a shot' at becoming cash-flow positive next quarter", "description": "Musk said advertising on Twitter was hit by a \"massive decline in advertising\" and by \"political\" reasons, without elaborating further.", "url": "https://www.businessinsider.com/elon-musk-twitter-cash-flow-next-quarter-advertising-layoffs-2023-3", "urlToImage": "https://i.insider.com/6407ebc8fe06040019bf4abd?width=1200&format=jpeg", "publishedAt": "2023-03-08T06:06:48Z", "content": "Despite being hit by declining advertising revenues, Twitter CEO Elon Musk said the social media platform has \"a shot\" at being cashflow-positive the next quarter.\r\n\"It's been a very difficult four m… [+3180 chars]" }, { "source": { "id": null, "name": "9to5Mac" }, "author": "Filipe Espósito", "title": "Ted Lasso fans will have a chance to spend the night in the show’s iconic pub thanks to Airbnb", "description": "Ted Lasso has become one of the most popular shows on Apple TV+ with a lot of fans around the world. Ahead of the season three premiere next week, Ted Lasso has teamed up with Airbnb to offer a unique experience to Lasso fans. The iconic Crown & Anchor Pub, w…", "url": "https://9to5mac.com/2023/03/07/ted-lasso-night-iconic-pub-airbnb/", "urlToImage": "https://i0.wp.com/9to5mac.com/wp-content/uploads/sites/6/2023/03/Ted-Lasso.jpg?resize=1200%2C628&quality=82&strip=all&ssl=1", "publishedAt": "2023-03-08T00:53:26Z", "content": "Ted Lasso has become one of the most popular shows on Apple TV+ with a lot of fans around the world. Ahead of the season three premiere next week, Ted Lasso has teamed up with Airbnb to offer a uniqu… [+2184 chars]" }, { "source": { "id": null, "name": "GSMArena.com" }, "author": "Vlad", "title": "Apple Pay finally makes it to South Korea, eight years after its initial introduction", "description": "Apple Pay is finally making it to South Korea, around eight years after it was initially launched. The arrival of the service in Samsung's home country has been talked about quite a bit recently, and today Apple confirmed the move in the Korean version of its…", "url": "https://www.gsmarena.com/apple_pay_finally_makes_it_to_south_korea_eight_years_after_its_initial_introduction-news-57818.php", "urlToImage": "https://fdn.gsmarena.com/imgroot/news/23/03/apple-pay-confirmed-for-south-korea/-952x498w6/gsmarena_000.jpg", "publishedAt": "2023-03-08T01:02:01Z", "content": "Apple Pay is finally making it to South Korea, around eight years after it was initially launched. The arrival of the service in Samsung's home country has been talked about quite a bit recently, and… [+1200 chars]" }, { "source": { "id": null, "name": "Gizmodo.jp" }, "author": "そうこ", "title": "Appleは全身スキャンでもっとユーザーの健康管理がしたいらしい", "description": "端末アンロックの顔認証・指紋認証によって、Apple（アップル）はすでに生物データ大手となっています。が、顔や指先だけじゃなく、いっそ全身スキャンしちゃいたいなーと考えているようです。", "url": "https://www.gizmodo.jp/2023/03/apple-body-scanning-face-id-iphone-watch-fat-health-ios.html", "urlToImage": "https://media.loom-app.com/gizmodo/dist/images/2023/03/07/230307faceid.jpg?w=1280&h=630&f=jpg", "publishedAt": "2023-03-08T01:00:00Z", "content": "Copyright © mediagene Inc. All Rights Reserved." }, { "source": { "id": null, "name": "IndieWire" }, "author": "Samantha Bergeson", "title": "‘Ted Lasso’ Season 3 Set Dealt with COVID, ‘Pressure,’ and Massive Crowds: ‘More Security’ Needed", "description": "Co-star and series co-creator Jason Sudeikis opened up about the \"pressure\" to deliver a great finale for the Apple TV+ series.", "url": "https://www.indiewire.com/2023/03/ted-lasso-season-3-production-needed-more-security-1234816639/", "urlToImage": "https://www.indiewire.com/wp-content/uploads/2021/10/Ted_Lasso_Photo_020803.jpg?w=780", "publishedAt": "2023-03-08T02:00:08Z", "content": "“Ted Lasso” may be coming to a close, but the beloved Emmy-winning Apple TV+ series was forced to “go with the flow” during production.\r\nSeries lead and co-creator Jason Sudeikis revealed that while … [+2843 chars]" }, { "source": { "id": null, "name": "Xatakamovil.com" }, "author": "Álvaro García M.", "title": "Tres iPhone de colores \"a destiempo\": la curiosa estrategia de Apple funciona", "description": "¡Han nacido dos nuevo iPhone! Vale, sí, son los mismos iPhone 14  y iPhone 14 Plus que se lanzaron en septiembre. ¡Pero el sombrero\r\n color es nuevo! Como ya se venía rumoreando, Apple lanzó nuevas versiones del iPhone 14 en color amarillo esta semana. Una tá…", "url": "https://www.xatakamovil.com/apple/tres-iphone-colores-a-destiempo-curiosa-estrategia-apple-funciona", "urlToImage": "https://i.blogs.es/d97c31/iphone-14-amarillo/840_560.jpeg", "publishedAt": "2023-03-08T08:16:42Z", "content": "¡Han nacido dos nuevo iPhone! Vale, sí, son los mismos iPhone 14  y iPhone 14 Plus que se lanzaron en septiembre. ¡Pero el sombrero\r\n color es nuevo! Como ya se venía rumoreando, Apple lanzó nuevas v… [+2942 chars]" }, { "source": { "id": null, "name": "Caschys Blog" }, "author": "Olli", "title": "iOS 16.4 Beta 3: Beta-Registrierung wird verbessert, weitere Verbesserungen unter der Haube", "description": "Die dritte Beta von iOS 16.4 da und bringt im Gegensatz zu den Testversionen davor nicht ganz so viel Neuerungen mit. Bisher hat Apple neue Emojis, Neuerungen für die Podcasts-App und die neue HomeKit-Architektur eingeführt. Außerdem können Dritt-Browser Webs…", "url": "https://stadt-bremerhaven.de/ios-16-4-beta-3-beta-registrierung-wird-verbessert-weitere-verbesserungen-unter-der-haube/", "urlToImage": "https://stadt-bremerhaven.de/wp-content/uploads/2022/06/ios16.jpeg", "publishedAt": "2023-03-08T07:00:51Z", "content": "Die dritte Beta von iOS 16.4 da und bringt im Gegensatz zu den Testversionen davor nicht ganz so viel Neuerungen mit. Bisher hat Apple neue Emojis, Neuerungen für die Podcasts-App und die neue HomeKi… [+2235 chars]" }, { "source": { "id": null, "name": "Ascii.jp" }, "author": "ASCII", "title": "Apple、春の新色のApple Watchバンドを発表　注文受付を開始", "description": "Appleはこの春の新色のApple Watchバンドを発表。Appleオンラインストア／Apple Storeアプリケーションにて注文受付を開始した。", "url": "https://weekly.ascii.jp/elem/000/004/127/4127743/", "urlToImage": "https://ascii.jp/img/2023/03/08/3504048/l/b4ccb1baaa5a1d3c.png", "publishedAt": "2023-03-08T03:20:00Z", "content": "Apple38Apple WatchAppleApple Store39\r\nApple Watch Hermès\r\n6800\r\n6800\r\n14800\r\nApple Watch HermèsApple Watch HermèsHermèsHermès\r\nH\r\nHermès46100H4610087800\r\nHermès\r\n498004980049800718007180071800" }, { "source": { "id": null, "name": "Presse-citron" }, "author": "Setra", "title": "La voiture électrique de Xiaomi est “en avance”", "description": "Le développement de la voiture électrique avance. La production en série débuterait au premier semestre 2024.", "url": "https://www.presse-citron.net/la-voiture-electrique-de-xiaomi-est-en-avance/", "urlToImage": "https://www.presse-citron.net/app/uploads/2023/02/mwc-xiaomi.jpg", "publishedAt": "2023-03-08T08:00:19Z", "content": "<ul><li>Comme Apple, Xiaomi prépare sa première voiture électrique, un projet annoncé en 2021</li><li>La filiale automobile est en avance sur son calendrier et désormais, la production en série serai… [+2460 chars]" }, { "source": { "id": null, "name": "Espinof.com" }, "author": "Albertini", "title": "Estrenos (8 de marzo): 49 series, películas y documentales en Netflix, Amazon, HBO Max, Disney+, Movistar Plus, Filmin y Apple TV+", "description": "Nuevo miércoles, Día internacional de la mujer, y como cada semana tenemos esta oportunidad de repasar las grandes novedades que nos encontramos en el panorama del streaming. En esta ocasión contamos con 49 series, películas y documentales que llegan desde ho…", "url": "https://www.espinof.com/estrenos/estrenos-8-marzo-series-peliculas-documentales-netflix-amazon-hbo-max-disney-plus-movistar-plus-filmin", "urlToImage": "https://i.blogs.es/cb6b35/original_1675370785_el-grito-de-las-mariposas---star-5-/840_560.jpeg", "publishedAt": "2023-03-08T07:00:39Z", "content": "Nuevo miércoles, Día internacional de la mujer, y como cada semana tenemos esta oportunidad de repasar las grandes novedades que nos encontramos en el panorama del streaming. En esta ocasión contamos… [+2699 chars]" }, { "source": { "id": null, "name": "Rolling Stone" }, "author": "John Lonsdale", "title": "Sonos Enters Its Spatial Audio Chapter With the New Era 300 Speaker", "description": "The company also announced the Era 100, a revamped version of Sonos' first speaker, now available for preorder", "url": "https://www.rollingstone.com/product-recommendations/electronics/sonos-era-300-speaker-buy-online-1234692245/", "urlToImage": "https://www.rollingstone.com/wp-content/uploads/2023/03/Sonos-Era-300-Speaker.png?w=1198&h=800&crop=1", "publishedAt": "2023-03-08T00:06:35Z", "content": "If you purchase an independently reviewed product or service through a link on our website, Rolling Stone may receive an affiliate commission.\r\nImagine you’re in the middle of your favorite band’s pe… [+2839 chars]" }, { "source": { "id": null, "name": "GSMArena.com" }, "author": "Vlad", "title": "Apple's Emergency SOS via Satellite expands to six more countries this month", "description": "Apple's announcement of the yellow iPhone 14 and iPhone 14 Plus earlier today contained a lot of small interesting tidbits aside from the phones themselves. We already told you about Apple Pay finally landing in South Korea, effectively ending a near-monopoly…", "url": "https://www.gsmarena.com/apples_emergency_sos_via_satellite_expands_to_six_more_countries_this_month-news-57819.php", "urlToImage": "https://fdn.gsmarena.com/imgroot/news/23/03/apple-satellite-service-new-countries/-952x498w6/gsmarena_000.jpg", "publishedAt": "2023-03-08T04:14:01Z", "content": "Apple's announcement of the yellowiPhone 14 and iPhone 14 Plus earlier today contained a lot of small interesting tidbits aside from the phones themselves. We already told you about Apple Pay finally… [+1073 chars]" }, { "source": { "id": null, "name": "Impress.co.jp" }, "author": null, "title": "au PAY、QUICPay＋利用で最大10万ポイントが当たるキャンペーンを4月30日まで実施", "description": "KDDI、auペイメント、auフィナンシャルサービスは、「au PAY プリペイドカード」「au PAY カード」「au PAY ゴールドカード」のいずれかを対象のモバイル端末に設定し、対象カードのQUICPay＋を利用すると、最大10万Pontaポイントが当たるキャンペーンを実施している。期間は4月30日まで。", "url": "https://k-tai.watch.impress.co.jp/docs/news/1484133.html", "urlToImage": "https://k-tai.watch.impress.co.jp/img/ktw/list/1484/133/0308au.png", "publishedAt": "2023-03-08T03:07:45Z", "content": "KDDIauauau PAY au PAY au PAY QUICPay10Ponta430 \r\n 50005010Ponta5009950500Ponta \r\n QUICPayQUICPay+ \r\n au PAY Apple Pay3118au PAY" }, { "source": { "id": null, "name": "Iphoneitalia.com" }, "author": "Giuseppe Migliorino", "title": "iOS 16.4 beta: Car Key abbandonerà il supporto NFC in futuro", "description": "Car Key potrebbe presto perdere il supporto alla tecnologia NFC. \nLink all'articolo originale: iOS 16.4 beta: Car Key abbandonerà il supporto NFC in futuro", "url": "https://www.iphoneitalia.com/805906/car-key-abbandona-nfc-ios-16-4-beta", "urlToImage": "https://static.iphoneitalia.com/wp-content/uploads/2021/01/carkey.jpg", "publishedAt": "2023-03-08T07:18:08Z", "content": "Dal codice della terza beta di iOS 16.4 si scopre che Apple potrebbe abbandonare il supporto NFC su Car Key nei prossimi mesi. Novità anche per il Security Update.\r\nLa funzione Car Key è stata introd… [+2592 chars]" }, { "source": { "id": null, "name": "iMore" }, "author": "heyimjoew@gmail.com (Joe Wituschek)", "title": "The iPhone 13 was the top-selling smartphone of 2022", "description": "The iPhone took eight of the top ten spots for global smartphone sales in 2022.", "url": "https://www.imore.com/iphone/the-iphone-13-was-the-top-selling-smartphone-of-2022", "urlToImage": "https://cdn.mos.cms.futurecdn.net/Rvj2Af4dm8Mis8mxuj2chV-1200-80.jpg", "publishedAt": "2023-03-08T00:09:45Z", "content": "The iPhone dominated smartphone sales in 2022.\r\nAccording to new research by Counterpoint Research, a data analyst firm, the iPhone took eight of the top ten spots when it came to global smartphone s… [+1503 chars]" }, { "source": { "id": null, "name": "Taisy0.com" }, "author": "taisy0", "title": "Apple、｢Apple Watch｣のチャレンジ企画｢国際女性デーチャレンジ｣を開催中（本日限り）", "description": "Appleが、本日の「国際女性デー」に合わせ、「Apple Watch」ユーザー向けのアクティビティチャレンジ「国際女性デーチャレンジ」を開催しています。 同チャレンジは今年で5年連続での開催となっており、本日中にいずれ ...", "url": "https://taisy0.com/2023/03/08/169405.html", "urlToImage": "https://taisy0.com/wp-content/uploads/2023/03/th_2023-challenge-womens-day-apple-watch.jpg", "publishedAt": "2023-03-08T00:01:10Z", "content": "AirTag HermèsAirTag Hermès2023" }, { "source": { "id": null, "name": "Impress.co.jp" }, "author": null, "title": "iPhone 14/14 Plusに新色イエロー。3月14日発売", "description": "Appleは、iPhone 14およびiPhone 14 Plusに新色イエローを追加する。発売日は14日で、予約受付は10日22時より開始される。価格はそれぞれ11万9,800円から、13万4,800円から。", "url": "https://pc.watch.impress.co.jp/docs/news/1484130.html", "urlToImage": "https://pc.watch.impress.co.jp/img/pcw/list/1484/130/01.jpg", "publishedAt": "2023-03-08T02:45:49Z", "content": "AppleiPhone 14iPhone 14 Plus141022119,800134,800 \r\n iPhone 14iPhone 14 PlusA15 Bionic×2+×4CPU5GPU \r\n (1,200f1.5)(1,200f2.4)24K/60piPhone 142,532×1,1706.1OLEDiPhone 14 Plus2,778×1,2846.7OLED" }] }
+
+
+
+            let str = ""
+            resultCount.innerHTML = response.totalResults
+
+            for (let item of response.articles) {
+                str = str + ` <div class="card my-4 mx-2" style="width: 18rem;">
+                <img height="180" src="${item.urlToImage}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${item.title.slice(0, 30)}</h5>
+                    <p class="card-text">${item.description.slice(0, 140)}...</p>
+                    <a href="${item.url}" target="_blank" class="btn btn-primary">Read Article</a>
+                </div>
+              </div>`
+            }
+            document.querySelector(".content").innerHTML = str
+
+
+
+
+        }
+
+
+        //  this portion is for the buttons used in the app 1>SEARCH 2>PREVIOUS 3>NEXT
+
+        fetchNews(1, currentQuery)
+
+        search.addEventListener("click", (e) => {
+
+            e.preventDefault()
+            let query = searchInput.value;
+            currentQuery = query
+
+            fetchNews(1, query)
+
+
+        })
+
+
+
+        prev.addEventListener("click", (e) => {
+
+            e.preventDefault()
+            if (currentPage > 1) {
+                currentPage = currentPage - 1
+
+
+                fetchNews(currentPage, currentQuery)
+            }
+
+
+        })
+
+
+
+        next.addEventListener("click", (e) => {
+
+            e.preventDefault()
+            currentPage = currentPage + 1
+
+
+            fetchNews(currentPage, currentQuery)
+
+
+        })
+    </script>
+</body>
+
+</html>
