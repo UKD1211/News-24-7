@@ -1,4 +1,5 @@
 # News-24-7
+![image](https://user-images.githubusercontent.com/111123125/224287782-0b1a5470-9dec-4940-a1ba-f08b2f355bbd.png)
 
 
 can check it out at : https://youtu.be/8s-xsllrqCk
